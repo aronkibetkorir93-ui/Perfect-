@@ -1,49 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>League App</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elite Football League</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
+    <div class="container">
+        <header>
+            <div class="logo">EFL</div>
+            <h1>LEAGUE TABLE</h1>
+        </header>
 
-<div class="app">
+        <div id="admin-auth">
+            <input type="password" id="admin-pass" placeholder="Enter Admin Password">
+            <button onclick="checkAuth()">Login to Update</button>
+        </div>
 
-  <h2>⚽ League App</h2>
+        <div id="admin-panel" style="display: none;">
+            <h3>Update Round Scores</h3>
+            <div id="fixtures-input-list"></div>
+            <button class="save-btn" onclick="processScores()">Update Table</button>
+        </div>
 
-  <div class="buttons">
-    <button onclick="generateTeams()">New Season</button>
-    <button onclick="generateFixtures()">Fixtures</button>
-    <button onclick="renderMatchday()">Matchday</button>
-    <button onclick="saveMatchday()">Save</button>
-    <button onclick="nextMatchday()">Next</button>
-  </div>
-
-  <div class="card">
-    <h3>Matchday</h3>
-    <div id="matches"></div>
-  </div>
-
-  <div class="card table-card">
-    <h3>Table</h3>
-    <div class="table-scroll">
-      <table>
-        <thead>
-          <tr>
-            <th>Team</th>
-            <th>P</th>
-            <th>PTS</th>
-          </tr>
-        </thead>
-        <tbody id="table"></tbody>
-      </table>
+        <table id="league-table">
+            <thead>
+                <tr>
+                    <th>POS</th>
+                    <th class="team-col">TEAM</th>
+                    <th>P</th>
+                    <th>W</th>
+                    <th>D</th>
+                    <th>L</th>
+                    <th>GF</th>
+                    <th>GA</th>
+                    <th>GD</th>
+                    <th>Pts</th>
+                </tr>
+            </thead>
+            <tbody id="table-body">
+                </tbody>
+        </table>
     </div>
-  </div>
-
-</div>
-
-<script src="script.js"></script>
-
+    <script src="script.js"></script>
 </body>
 </html>
