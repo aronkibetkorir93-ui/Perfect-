@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Elite Football League</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         :root {
             --bg-dark: #020617;
@@ -16,78 +17,69 @@
         body {
             background-color: var(--bg-dark);
             background-image: radial-gradient(circle at top, #1e293b 0%, var(--bg-dark) 80%);
-            color: white;
-            font-family: 'Arial Narrow', sans-serif;
-            margin: 0;
-            padding: 10px;
-            min-height: 100vh;
+            color: white; font-family: 'Arial Narrow', sans-serif;
+            margin: 0; padding: 10px; min-height: 100vh;
         }
 
         .container { max-width: 500px; margin: auto; }
 
-        /* Header & Logo */
-        header { text-align: center; padding: 20px 0; }
+        header { text-align: center; padding: 15px 0; }
         .logo-circle {
-            width: 80px; height: 80px; margin: 0 auto 10px;
+            width: 70px; height: 70px; margin: 0 auto 10px;
             border: 2px solid var(--gold-text); border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            font-weight: bold; color: var(--gold-text); font-size: 1.5rem;
-            background: rgba(0,0,0,0.5);
+            font-weight: bold; color: var(--gold-text); font-size: 1.3rem;
+            background: rgba(0,0,0,0.5); box-shadow: 0 0 20px rgba(197, 160, 89, 0.2);
         }
 
-        h1 { 
-            font-size: 1.4rem; color: var(--gold-text); 
-            letter-spacing: 2px; text-transform: uppercase; margin: 0;
-        }
+        h1 { font-size: 1.3rem; color: var(--gold-text); letter-spacing: 2px; text-transform: uppercase; margin: 0; }
 
-        /* Navigation Tabs */
+        /* Navigation */
         .tabs { display: flex; gap: 5px; margin-bottom: 15px; }
         .tab-btn {
-            flex: 1; padding: 10px; border: 1px solid #c5a059;
+            flex: 1; padding: 10px 5px; border: 1px solid #c5a059;
             background: transparent; color: white; cursor: pointer;
-            text-transform: uppercase; font-weight: bold;
+            text-transform: uppercase; font-weight: bold; font-size: 0.75rem;
         }
         .tab-btn.active { background: var(--gold-gradient); color: black; }
 
-        /* Fixture Styling (Matches Template 2) */
+        /* Common Capture Area Header (For Downloads) */
+        .capture-header { text-align:center; padding: 10px; display: none; }
+        .capture-area.downloading .capture-header { display: block; } /* Only shows in the downloaded image */
+        .capture-area { background: var(--bg-dark); padding: 10px; border-radius: 8px; }
+
+        /* Fixtures Styling */
         .round-banner {
             background: var(--gold-gradient); color: black;
-            text-align: center; font-weight: 900; padding: 5px;
-            margin-bottom: 10px; border-radius: 2px;
+            text-align: center; font-weight: 900; padding: 6px;
+            margin-bottom: 10px; border-radius: 2px; letter-spacing: 1px; text-transform: uppercase;
         }
-
         .fixture-card {
-            background: var(--efl-blue);
-            border: 1px solid rgba(197, 160, 89, 0.3);
+            background: var(--efl-blue); border: 1px solid rgba(197, 160, 89, 0.3);
             margin-bottom: 8px; display: flex; align-items: center;
-            justify-content: space-between; padding: 12px 15px;
-            position: relative; border-radius: 4px;
+            justify-content: space-between; padding: 12px; border-radius: 4px;
         }
-        .fixture-card span { flex: 1; font-weight: bold; font-size: 0.9rem; }
+        .fixture-card span { flex: 1; font-weight: bold; font-size: 0.85rem; }
         .fixture-card .vs-box {
             flex: 0; background: var(--gold-gradient); color: black;
-            padding: 2px 8px; font-size: 0.7rem; border-radius: 3px; margin: 0 10px;
+            padding: 2px 8px; font-size: 0.65rem; border-radius: 3px; margin: 0 10px; font-weight: 900;
         }
-        .fixture-card input { width: 30px; text-align: center; border: none; border-radius: 2px; }
+        .fixture-card input { width: 30px; height: 25px; text-align: center; border: none; font-weight: bold; border-radius: 2px; }
 
-        /* Table Styling (Matches Template 1) */
-        .league-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
-        .league-table th { 
-            border-bottom: 1px solid var(--gold-text); color: var(--gold-text); 
-            padding: 10px 5px; text-align: center;
-        }
-        .league-table td { padding: 12px 5px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .team-name { text-align: left; padding-left: 10px; font-weight: bold; width: 40%; }
+        /* Table & Stats Styling */
+        .league-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; margin-bottom: 15px;}
+        .league-table th { border-bottom: 1px solid var(--gold-text); color: var(--gold-text); padding: 10px 2px; }
+        .league-table td { padding: 12px 2px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .team-name { text-align: left; padding-left: 10px; font-weight: bold; color: #fff; }
+        .pos-1 { background: var(--gold-gradient); }
+        .pos-1 td { color: black !important; }
+        .pos-1 .team-name { color: black !important; }
+
+        /* Buttons */
+        .admin-section { background: rgba(0,0,0,0.4); padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px dashed var(--gold-text); }
+        .btn-gold { background: var(--gold-gradient); border: none; padding: 12px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 10px; border-radius: 4px; }
+        .btn-download { background: #1e293b; color: var(--gold-text); border: 1px solid var(--gold-text); padding: 10px; width: 100%; margin-top: 10px; cursor: pointer; font-weight: bold; text-transform: uppercase;}
         
-        .pos-1 { background: var(--gold-gradient); color: black !important; }
-
-        /* Admin UI */
-        .admin-login { text-align: center; margin-bottom: 20px; }
-        .btn-gold { 
-            background: var(--gold-gradient); border: none; padding: 10px 20px;
-            font-weight: bold; cursor: pointer; border-radius: 4px; margin-top: 10px; width: 100%;
-        }
-
         .hidden { display: none; }
     </style>
 </head>
@@ -100,115 +92,192 @@
     </header>
 
     <div class="tabs">
-        <button class="tab-btn active" onclick="switchTab('fixtures')">Fixtures</button>
-        <button class="tab-btn" onclick="switchTab('table')">Standings</button>
+        <button id="btn-fix" class="tab-btn active" onclick="switchTab('fixtures')">Matches</button>
+        <button id="btn-tab" class="tab-btn" onclick="switchTab('table')">Standings</button>
+        <button id="btn-stat" class="tab-btn" onclick="switchTab('stats')">Stats</button>
     </div>
 
-    <div id="admin-auth" class="admin-login">
-        <input type="password" id="pin" placeholder="Enter PIN" style="padding: 8px;">
-        <button onclick="login()" style="padding: 8px;">Login</button>
+    <div id="admin-auth" class="admin-section">
+        <input type="password" id="pin" placeholder="PIN" style="width:50%; padding:8px;">
+        <button onclick="login()" style="padding:8px; width:40%;">Admin Login</button>
     </div>
 
     <div id="tab-fixtures">
         <select id="round-select" onchange="loadFixtures()" style="width:100%; padding:10px; margin-bottom:10px; background:#000; color:#fff; border:1px solid #c5a059;"></select>
-        <div class="round-banner" id="current-round-label">ROUND 1</div>
-        <div id="fixture-list"></div>
+        
+        <div id="capture-fixtures" class="capture-area">
+            <div class="capture-header">
+                <div style="color:var(--gold-text); font-size: 0.7rem; letter-spacing: 2px;">ELITE FOOTBALL LEAGUE</div>
+                <div style="font-size: 1.2rem; font-weight: bold; color: white;">MATCH RESULTS</div>
+            </div>
+            <div class="round-banner" id="current-round-label">ROUND 1</div>
+            <div id="fixture-list"></div>
+        </div>
+        
         <button id="save-btn" class="btn-gold hidden" onclick="saveScores()">SAVE SCORES</button>
+        <button class="btn-download" onclick="downloadImage('capture-fixtures', 'EFL-Results.png')">⬇ DOWNLOAD MATCHDAY</button>
     </div>
 
     <div id="tab-table" class="hidden">
-        <table class="league-table">
-            <thead>
-                <tr>
-                    <th>POS</th>
-                    <th style="text-align:left; padding-left:10px;">PLAYER</th>
-                    <th>P</th><th>W</th><th>D</th><th>L</th><th>GD</th><th>PTS</th>
-                </tr>
-            </thead>
-            <tbody id="table-body"></tbody>
-        </table>
+        <div id="capture-table" class="capture-area">
+            <div class="capture-header">
+                <div style="color:var(--gold-text); font-size: 0.7rem; letter-spacing: 2px;">ELITE FOOTBALL LEAGUE</div>
+                <div style="font-size: 1.2rem; font-weight: bold; color: white;">SEASON STANDINGS</div>
+            </div>
+            <table class="league-table">
+                <thead>
+                    <tr>
+                        <th>POS</th>
+                        <th style="text-align:left; padding-left:10px;">PLAYER</th>
+                        <th>P</th><th>W</th><th>D</th><th>L</th><th>GD</th><th>PTS</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body"></tbody>
+            </table>
+        </div>
+        <button class="btn-download" onclick="downloadImage('capture-table', 'EFL-Standings.png')">⬇ DOWNLOAD STANDINGS</button>
+    </div>
+
+    <div id="tab-stats" class="hidden">
+        <div id="capture-stats" class="capture-area">
+            <div class="capture-header">
+                <div style="color:var(--gold-text); font-size: 0.7rem; letter-spacing: 2px;">ELITE FOOTBALL LEAGUE</div>
+                <div style="font-size: 1.2rem; font-weight: bold; color: white;">TEAM STATS</div>
+            </div>
+            
+            <div class="round-banner">TOP SCORERS (BEST ATTACK)</div>
+            <table class="league-table">
+                <thead><tr><th>POS</th><th style="text-align:left; padding-left:10px;">PLAYER</th><th>GOALS FOR</th></tr></thead>
+                <tbody id="attack-body"></tbody>
+            </table>
+
+            <div class="round-banner" style="margin-top: 20px;">BEST DEFENCE (LEAST CONCEDED)</div>
+            <table class="league-table">
+                <thead><tr><th>POS</th><th style="text-align:left; padding-left:10px;">PLAYER</th><th>GOALS AGAINST</th></tr></thead>
+                <tbody id="defence-body"></tbody>
+            </table>
+        </div>
+        <button class="btn-download" onclick="downloadImage('capture-stats', 'EFL-Stats.png')">⬇ DOWNLOAD STATS</button>
     </div>
 </div>
 
 <script>
-    const teams = ["BOSCO", "KIBET ARON", "ARLUSH", "LINOO", "MANU KHEED", "IAN TOO", "BRALYN KIPKIRUI", "KHOLS JUDE", "HOLY PLUG", "IANOHM", "MANU JOSH", "ZADDOCK", "FELLO MARK", "ANDERSCO KEVELYSON"];
-    let db = JSON.parse(localStorage.getItem('efl_storage')) || {};
+    const teamList = ["BOSCO", "KIBET ARON", "ARLUSH", "LINOO", "MANU KHEED", "IAN TOO", "BRALYN KIPKIRUI", "KHOLS JUDE", "HOLY PLUG", "IANOHM", "MANU JOSH", "ZADDOCK", "FELLO MARK", "ANDERSCO KEVELYSON"];
+    
+    let db = JSON.parse(localStorage.getItem('efl_final_v3')) || {};
     let isAdmin = false;
 
-    // Build Round Selector
+    // Populate Selector
     const sel = document.getElementById('round-select');
     for(let i=1; i<=13; i++){
-        let o = document.createElement('option'); o.value = i; o.text = "Round " + i;
+        let o = document.createElement('option'); o.value = i; o.text = "Match Day " + i;
         sel.appendChild(o);
     }
 
+    // Round Robin Scheduler
+    function getRoundRobinMatches(roundNum) {
+        let schedule = [];
+        let temp = [...teamList];
+        let n = temp.length;
+        for (let r = 1; r < roundNum; r++) {
+            let last = temp.pop();
+            temp.splice(1, 0, last);
+        }
+        for (let i = 0; i < n / 2; i++) {
+            schedule.push([temp[i], temp[n - 1 - i]]);
+        }
+        return schedule;
+    }
+
+    // Tab Navigation
     function switchTab(tab) {
         document.getElementById('tab-fixtures').classList.toggle('hidden', tab !== 'fixtures');
         document.getElementById('tab-table').classList.toggle('hidden', tab !== 'table');
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.innerText.toLowerCase().includes(tab)));
-        if(tab === 'table') calculateStandings();
+        document.getElementById('tab-stats').classList.toggle('hidden', tab !== 'stats');
+        
+        document.getElementById('btn-fix').classList.toggle('active', tab === 'fixtures');
+        document.getElementById('btn-tab').classList.toggle('active', tab === 'table');
+        document.getElementById('btn-stat').classList.toggle('active', tab === 'stats');
+        
+        if(tab === 'table') calculateAllData();
+        if(tab === 'stats') calculateAllData();
     }
 
+    // Admin Login
     function login() {
         if(document.getElementById('pin').value === "1234") {
             isAdmin = true;
-            document.getElementById('admin-auth').classList.add('hidden');
+            document.getElementById('admin-auth').innerHTML = "<p style='color:#c5a059; text-align:center; margin:0;'>Admin Unlocked 🔓</p>";
             document.getElementById('save-btn').classList.remove('hidden');
             loadFixtures();
         }
     }
 
+    // Load Matches for Selected Round
     function loadFixtures() {
-        const r = sel.value;
-        document.getElementById('current-round-label').innerText = "ROUND " + r;
+        const r = parseInt(sel.value);
+        document.getElementById('current-round-label').innerText = "MATCH DAY " + r;
         const list = document.getElementById('fixture-list');
-        const scores = db[r] || {};
+        const matches = getRoundRobinMatches(r);
+        const saved = db[r] || {};
         list.innerHTML = "";
-
-        for(let i=0; i < teams.length; i+=2) {
-            const s1 = scores[i] ?? "";
-            const s2 = scores[i+1] ?? "";
+        
+        matches.forEach((match, i) => {
+            const key = match.sort().join("_vs_");
+            const s1 = saved[key] ? saved[key][match[0]] : "";
+            const s2 = saved[key] ? saved[key][match[1]] : "";
             list.innerHTML += `
                 <div class="fixture-card">
-                    <span style="text-align:right">${teams[i]}</span>
-                    ${isAdmin ? `<input type="number" id="sc-${i}" value="${s1}">` : `<b style="margin:0 5px">${s1}</b>`}
+                    <span style="text-align:right">${match[0]}</span>
+                    ${isAdmin ? `<input type="number" id="in1-${i}" value="${s1}">` : `<b style="margin:0 5px; font-size:1.1rem">${s1 !== "" ? s1 : '-'}</b>`}
                     <div class="vs-box">VS</div>
-                    ${isAdmin ? `<input type="number" id="sc-${i+1}" value="${s2}">` : `<b style="margin:0 5px">${s2}</b>`}
-                    <span style="text-align:left">${teams[i+1]}</span>
+                    ${isAdmin ? `<input type="number" id="in2-${i}" value="${s2}">` : `<b style="margin:0 5px; font-size:1.1rem">${s2 !== "" ? s2 : '-'}</b>`}
+                    <span style="text-align:left">${match[1]}</span>
                 </div>
             `;
-        }
+        });
     }
 
+    // Save Data
     function saveScores() {
         const r = sel.value;
-        db[r] = db[r] || {};
-        for(let i=0; i < teams.length; i++) {
-            const val = document.getElementById(`sc-${i}`).value;
-            db[r][i] = val === "" ? null : parseInt(val);
-        }
-        localStorage.setItem('efl_storage', JSON.stringify(db));
-        alert("Scores Saved for Round " + r);
-    }
-
-    function calculateStandings() {
-        let stats = teams.map(name => ({ name, p:0, w:0, d:0, l:0, gf:0, ga:0, pts:0 }));
-        Object.values(db).forEach(round => {
-            for(let i=0; i<teams.length; i+=2) {
-                const s1 = round[i], s2 = round[i+1];
-                if(s1 !== null && s2 !== null && s1 !== undefined) {
-                    let t1 = stats[i], t2 = stats[i+1];
-                    t1.p++; t2.p++; t1.gf += s1; t1.ga += s2; t2.gf += s2; t2.ga += s1;
-                    if(s1 > s2) { t1.w++; t1.pts += 3; t2.l++; }
-                    else if(s1 < s2) { t2.w++; t2.pts += 3; t1.l++; }
-                    else { t1.d++; t1.pts += 1; t2.d++; t2.pts += 1; }
-                }
+        const matches = getRoundRobinMatches(parseInt(r));
+        db[r] = {};
+        matches.forEach((match, i) => {
+            const key = match.sort().join("_vs_");
+            const v1 = document.getElementById(`in1-${i}`).value;
+            const v2 = document.getElementById(`in2-${i}`).value;
+            if(v1 !== "" && v2 !== "") {
+                db[r][key] = { [match[0]]: parseInt(v1), [match[1]]: parseInt(v2) };
             }
         });
-        stats.sort((a,b) => b.pts - a.pts || (b.gf - b.ga) - (a.gf - a.ga));
+        localStorage.setItem('efl_final_v3', JSON.stringify(db));
+        alert("Match Day " + r + " Saved!");
+    }
+
+    // Core Calculation for Table and Stats
+    function calculateAllData() {
+        let stats = {};
+        teamList.forEach(t => stats[t] = { name:t, p:0, w:0, d:0, l:0, gf:0, ga:0, pts:0 });
         
-        const body = document.getElementById('table-body');
-        body.innerHTML = stats.map((s, i) => `
+        Object.values(db).forEach(round => {
+            Object.keys(round).forEach(key => {
+                const teams = key.split("_vs_");
+                const s1 = round[key][teams[0]];
+                const s2 = round[key][teams[1]];
+                let t1 = stats[teams[0]], t2 = stats[teams[1]];
+                
+                t1.p++; t2.p++; t1.gf += s1; t1.ga += s2; t2.gf += s2; t2.ga += s1;
+                
+                if(s1 > s2) { t1.w++; t1.pts += 3; t2.l++; }
+                else if(s2 > s1) { t2.w++; t2.pts += 3; t1.l++; }
+                else { t1.d++; t1.pts += 1; t2.d++; t2.pts += 1; }
+            });
+        });
+
+        // 1. Populate Main Table
+        let tableData = Object.values(stats).sort((a,b) => b.pts - a.pts || (b.gf-b.ga) - (a.gf-a.ga) || b.gf - a.gf);
+        document.getElementById('table-body').innerHTML = tableData.map((s, i) => `
             <tr class="${i === 0 ? 'pos-1' : ''}">
                 <td>${i+1}</td>
                 <td class="team-name">${s.name}</td>
@@ -216,8 +285,39 @@
                 <td>${s.gf - s.ga}</td><td><b>${s.pts}</b></td>
             </tr>
         `).join('');
+
+        // 2. Populate Attack Stats (Most GF)
+        let attackData = [...Object.values(stats)].sort((a,b) => b.gf - a.gf);
+        document.getElementById('attack-body').innerHTML = attackData.slice(0, 5).map((s, i) => `
+            <tr><td>${i+1}</td><td class="team-name">${s.name}</td><td style="color:var(--gold-text); font-weight:bold">${s.gf}</td></tr>
+        `).join('');
+
+        // 3. Populate Defence Stats (Least GA - only for teams that have played)
+        let defenceData = [...Object.values(stats)].filter(s => s.p > 0).sort((a,b) => a.ga - b.ga);
+        document.getElementById('defence-body').innerHTML = defenceData.slice(0, 5).map((s, i) => `
+            <tr><td>${i+1}</td><td class="team-name">${s.name}</td><td style="color:#4ade80; font-weight:bold">${s.ga}</td></tr>
+        `).join('');
     }
 
+    // Multi-purpose Image Downloader
+    function downloadImage(areaId, filename) {
+        const area = document.getElementById(areaId);
+        
+        // Add a class temporarily to show the hidden headers for a clean export
+        area.classList.add('downloading');
+        
+        html2canvas(area, { backgroundColor: "#020617", scale: 2 }).then(canvas => {
+            const link = document.createElement('a');
+            link.download = filename;
+            link.href = canvas.toDataURL();
+            link.click();
+            
+            // Remove the temporary class so the app goes back to normal
+            area.classList.remove('downloading');
+        });
+    }
+
+    // Initialize
     loadFixtures();
 </script>
 </body>
