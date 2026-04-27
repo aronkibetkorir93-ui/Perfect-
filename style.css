@@ -1,67 +1,85 @@
+:root {
+    --bg-dark: #050a18;
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --gold: #d4af37;
+    --gold-bright: #f9e29c;
+    --text-white: #e0e0e0;
+}
+
 body {
-  margin: 0;
-  font-family: Arial;
-  background: #0b0b0b;
-  color: white;
+    background: radial-gradient(circle at top, #101e3d 0%, var(--bg-dark) 100%);
+    color: var(--text-white);
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 20px;
 }
 
-.app {
-  max-width: 420px;
-  margin: auto;
-  padding: 10px;
+.container {
+    max-width: 900px;
+    margin: auto;
 }
 
-h2 {
-  text-align: center;
-  margin: 10px 0;
+header {
+    text-align: center;
+    margin-bottom: 30px;
 }
 
-.buttons {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-}
-
-button {
-  padding: 12px;
-  border: none;
-  background: #1f1f1f;
-  color: white;
-  border-radius: 8px;
-  font-size: 14px;
-}
-
-button:active {
-  background: #333;
-}
-
-.card {
-  background: #161616;
-  padding: 10px;
-  margin-top: 10px;
-  border-radius: 10px;
-}
-
-input {
-  width: 50px;
-  text-align: center;
-  margin: 3px;
-  padding: 5px;
-}
-
-.table-scroll {
-  max-height: 300px;
-  overflow-y: auto;
+h1 {
+    letter-spacing: 4px;
+    color: var(--gold);
+    border-bottom: 1px solid var(--gold);
+    display: inline-block;
+    padding-bottom: 5px;
 }
 
 table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 13px;
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--card-bg);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    overflow: hidden;
 }
 
-th, td {
-  border-bottom: 1px solid #333;
-  padding: 6px;
-  text-align: center;
+th {
+    background: rgba(0, 0, 0, 0.3);
+    color: var(--gold);
+    padding: 15px;
+    font-size: 0.8rem;
+}
+
+td {
+    padding: 12px 15px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.team-col { text-align: left; font-weight: bold; }
+
+tr:nth-child(1) td { color: var(--gold-bright); } /* Leader highlight */
+
+#admin-panel {
+    background: rgba(212, 175, 55, 0.1);
+    padding: 20px;
+    border: 1px solid var(--gold);
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
+
+input {
+    background: #000;
+    border: 1px solid var(--gold);
+    color: #fff;
+    padding: 5px;
+    width: 40px;
+    text-align: center;
+}
+
+.save-btn {
+    background: var(--gold);
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 10px;
 }
