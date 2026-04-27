@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>League App</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="app">
+
+  <h2>⚽ League App</h2>
+
+  <div class="buttons">
+    <button onclick="generateTeams()">New Season</button>
+    <button onclick="generateFixtures()">Fixtures</button>
+    <button onclick="renderMatchday()">Matchday</button>
+    <button onclick="saveMatchday()">Save</button>
+    <button onclick="nextMatchday()">Next</button>
+  </div>
+
+  <div class="card">
+    <h3>Matchday</h3>
+    <div id="matches"></div>
+  </div>
+
+  <div class="card table-card">
+    <h3>Table</h3>
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Team</th>
+            <th>P</th>
+            <th>PTS</th>
+          </tr>
+        </thead>
+        <tbody id="table"></tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>
