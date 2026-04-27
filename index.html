@@ -22,64 +22,52 @@
         }
 
         .container { max-width: 500px; margin: auto; }
-
         header { text-align: center; padding: 15px 0; }
         .logo-circle {
-            width: 70px; height: 70px; margin: 0 auto 10px;
+            width: 60px; height: 60px; margin: 0 auto 10px;
             border: 2px solid var(--gold-text); border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            font-weight: bold; color: var(--gold-text); font-size: 1.3rem;
+            font-weight: bold; color: var(--gold-text); font-size: 1.2rem;
             background: rgba(0,0,0,0.5); box-shadow: 0 0 20px rgba(197, 160, 89, 0.2);
         }
 
-        h1 { font-size: 1.3rem; color: var(--gold-text); letter-spacing: 2px; text-transform: uppercase; margin: 0; }
+        h1 { font-size: 1.2rem; color: var(--gold-text); letter-spacing: 2px; text-transform: uppercase; margin: 0; }
 
         /* Navigation */
-        .tabs { display: flex; gap: 5px; margin-bottom: 15px; }
+        .tabs { display: flex; gap: 3px; margin-bottom: 15px; flex-wrap: wrap; }
         .tab-btn {
-            flex: 1; padding: 10px 5px; border: 1px solid #c5a059;
+            flex: 1; padding: 10px 2px; border: 1px solid #c5a059;
             background: transparent; color: white; cursor: pointer;
-            text-transform: uppercase; font-weight: bold; font-size: 0.75rem;
+            text-transform: uppercase; font-weight: bold; font-size: 0.65rem;
         }
         .tab-btn.active { background: var(--gold-gradient); color: black; }
 
-        /* Common Capture Area Header (For Downloads) */
-        .capture-header { text-align:center; padding: 10px; display: none; }
-        .capture-area.downloading .capture-header { display: block; } /* Only shows in the downloaded image */
+        /* Areas */
         .capture-area { background: var(--bg-dark); padding: 10px; border-radius: 8px; }
+        .capture-header { text-align:center; padding: 10px; display: none; }
+        .capture-area.downloading .capture-header { display: block; }
 
-        /* Fixtures Styling */
-        .round-banner {
-            background: var(--gold-gradient); color: black;
-            text-align: center; font-weight: 900; padding: 6px;
-            margin-bottom: 10px; border-radius: 2px; letter-spacing: 1px; text-transform: uppercase;
-        }
-        .fixture-card {
-            background: var(--efl-blue); border: 1px solid rgba(197, 160, 89, 0.3);
-            margin-bottom: 8px; display: flex; align-items: center;
-            justify-content: space-between; padding: 12px; border-radius: 4px;
-        }
-        .fixture-card span { flex: 1; font-weight: bold; font-size: 0.85rem; }
-        .fixture-card .vs-box {
-            flex: 0; background: var(--gold-gradient); color: black;
-            padding: 2px 8px; font-size: 0.65rem; border-radius: 3px; margin: 0 10px; font-weight: 900;
-        }
-        .fixture-card input { width: 30px; height: 25px; text-align: center; border: none; font-weight: bold; border-radius: 2px; }
+        /* Fixture Cards */
+        .round-banner { background: var(--gold-gradient); color: black; text-align: center; font-weight: 900; padding: 6px; margin-bottom: 10px; border-radius: 2px; text-transform: uppercase; font-size: 0.8rem; }
+        .fixture-card { background: var(--efl-blue); border: 1px solid rgba(197, 160, 89, 0.2); margin-bottom: 6px; display: flex; align-items: center; justify-content: space-between; padding: 10px; border-radius: 4px; }
+        .fixture-card span { flex: 1; font-weight: bold; font-size: 0.8rem; }
+        .fixture-card .vs-box { flex: 0; background: var(--gold-gradient); color: black; padding: 2px 6px; font-size: 0.6rem; border-radius: 3px; margin: 0 8px; font-weight: 900; }
+        .fixture-card input { width: 30px; height: 22px; text-align: center; border: none; font-weight: bold; border-radius: 2px; }
 
-        /* Table & Stats Styling */
-        .league-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; margin-bottom: 15px;}
-        .league-table th { border-bottom: 1px solid var(--gold-text); color: var(--gold-text); padding: 10px 2px; }
-        .league-table td { padding: 12px 2px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .team-name { text-align: left; padding-left: 10px; font-weight: bold; color: #fff; }
+        /* Tables */
+        .league-table { width: 100%; border-collapse: collapse; font-size: 0.75rem; margin-bottom: 15px; }
+        .league-table th { border-bottom: 1px solid var(--gold-text); color: var(--gold-text); padding: 8px 2px; }
+        .league-table td { padding: 10px 2px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .team-name { text-align: left; padding-left: 8px; font-weight: bold; }
         .pos-1 { background: var(--gold-gradient); }
         .pos-1 td { color: black !important; }
-        .pos-1 .team-name { color: black !important; }
 
-        /* Buttons */
-        .admin-section { background: rgba(0,0,0,0.4); padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px dashed var(--gold-text); }
-        .btn-gold { background: var(--gold-gradient); border: none; padding: 12px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 10px; border-radius: 4px; }
-        .btn-download { background: #1e293b; color: var(--gold-text); border: 1px solid var(--gold-text); padding: 10px; width: 100%; margin-top: 10px; cursor: pointer; font-weight: bold; text-transform: uppercase;}
-        
+        /* Admin UI */
+        .admin-box { background: rgba(0,0,0,0.4); padding: 12px; border-radius: 8px; margin-bottom: 15px; border: 1px dashed var(--gold-text); }
+        .btn-gold { background: var(--gold-gradient); border: none; padding: 10px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 8px; border-radius: 4px; font-size: 0.8rem; }
+        .btn-download { background: #1e293b; color: var(--gold-text); border: 1px solid var(--gold-text); padding: 8px; width: 100%; margin-top: 8px; cursor: pointer; font-size: 0.7rem; font-weight: bold; }
+        .team-manage-item { display: flex; justify-content: space-between; align-items: center; background: var(--efl-blue); padding: 8px; margin-bottom: 5px; border-left: 3px solid var(--gold-text); }
+
         .hidden { display: none; }
     </style>
 </head>
@@ -95,89 +83,143 @@
         <button id="btn-fix" class="tab-btn active" onclick="switchTab('fixtures')">Matches</button>
         <button id="btn-tab" class="tab-btn" onclick="switchTab('table')">Standings</button>
         <button id="btn-stat" class="tab-btn" onclick="switchTab('stats')">Stats</button>
+        <button id="btn-manage" class="tab-btn hidden" onclick="switchTab('manage')">Manage</button>
     </div>
 
-    <div id="admin-auth" class="admin-section">
-        <input type="password" id="pin" placeholder="PIN" style="width:50%; padding:8px;">
-        <button onclick="login()" style="padding:8px; width:40%;">Admin Login</button>
+    <div id="admin-auth" class="admin-box">
+        <input type="password" id="pin" placeholder="Admin PIN" style="width:50%; padding:8px;">
+        <button onclick="login()" style="padding:8px; width:40%;">Login</button>
     </div>
 
     <div id="tab-fixtures">
         <select id="round-select" onchange="loadFixtures()" style="width:100%; padding:10px; margin-bottom:10px; background:#000; color:#fff; border:1px solid #c5a059;"></select>
-        
         <div id="capture-fixtures" class="capture-area">
-            <div class="capture-header">
-                <div style="color:var(--gold-text); font-size: 0.7rem; letter-spacing: 2px;">ELITE FOOTBALL LEAGUE</div>
-                <div style="font-size: 1.2rem; font-weight: bold; color: white;">MATCH RESULTS</div>
-            </div>
-            <div class="round-banner" id="current-round-label">ROUND 1</div>
+            <div class="capture-header"><h4>EFL MATCH RESULTS</h4></div>
+            <div class="round-banner" id="current-round-label">MATCH DAY 1</div>
             <div id="fixture-list"></div>
         </div>
-        
         <button id="save-btn" class="btn-gold hidden" onclick="saveScores()">SAVE SCORES</button>
-        <button class="btn-download" onclick="downloadImage('capture-fixtures', 'EFL-Results.png')">⬇ DOWNLOAD MATCHDAY</button>
+        <button class="btn-download" onclick="downloadImage('capture-fixtures', 'EFL-Matches.png')">DOWNLOAD IMAGE</button>
     </div>
 
     <div id="tab-table" class="hidden">
         <div id="capture-table" class="capture-area">
-            <div class="capture-header">
-                <div style="color:var(--gold-text); font-size: 0.7rem; letter-spacing: 2px;">ELITE FOOTBALL LEAGUE</div>
-                <div style="font-size: 1.2rem; font-weight: bold; color: white;">SEASON STANDINGS</div>
-            </div>
+            <div class="capture-header"><h4>EFL LEAGUE TABLE</h4></div>
             <table class="league-table">
-                <thead>
-                    <tr>
-                        <th>POS</th>
-                        <th style="text-align:left; padding-left:10px;">PLAYER</th>
-                        <th>P</th><th>W</th><th>D</th><th>L</th><th>GD</th><th>PTS</th>
-                    </tr>
-                </thead>
+                <thead><tr><th>POS</th><th style="text-align:left">PLAYER</th><th>P</th><th>W</th><th>D</th><th>L</th><th>GD</th><th>PTS</th></tr></thead>
                 <tbody id="table-body"></tbody>
             </table>
         </div>
-        <button class="btn-download" onclick="downloadImage('capture-table', 'EFL-Standings.png')">⬇ DOWNLOAD STANDINGS</button>
+        <button class="btn-download" onclick="downloadImage('capture-table', 'EFL-Standings.png')">DOWNLOAD IMAGE</button>
     </div>
 
     <div id="tab-stats" class="hidden">
         <div id="capture-stats" class="capture-area">
-            <div class="capture-header">
-                <div style="color:var(--gold-text); font-size: 0.7rem; letter-spacing: 2px;">ELITE FOOTBALL LEAGUE</div>
-                <div style="font-size: 1.2rem; font-weight: bold; color: white;">TEAM STATS</div>
-            </div>
-            
-            <div class="round-banner">TOP SCORERS (BEST ATTACK)</div>
-            <table class="league-table">
-                <thead><tr><th>POS</th><th style="text-align:left; padding-left:10px;">PLAYER</th><th>GOALS FOR</th></tr></thead>
-                <tbody id="attack-body"></tbody>
-            </table>
-
-            <div class="round-banner" style="margin-top: 20px;">BEST DEFENCE (LEAST CONCEDED)</div>
-            <table class="league-table">
-                <thead><tr><th>POS</th><th style="text-align:left; padding-left:10px;">PLAYER</th><th>GOALS AGAINST</th></tr></thead>
-                <tbody id="defence-body"></tbody>
-            </table>
+            <div class="round-banner">TOP ATTACK (GOALS)</div>
+            <table class="league-table"><tbody id="attack-body"></tbody></table>
+            <div class="round-banner">TOP DEFENCE (GA)</div>
+            <table class="league-table"><tbody id="defence-body"></tbody></table>
         </div>
-        <button class="btn-download" onclick="downloadImage('capture-stats', 'EFL-Stats.png')">⬇ DOWNLOAD STATS</button>
+        <button class="btn-download" onclick="downloadImage('capture-stats', 'EFL-Stats.png')">DOWNLOAD IMAGE</button>
+    </div>
+
+    <div id="tab-manage" class="hidden">
+        <div class="admin-box">
+            <h3 style="color:var(--gold-text); margin-top:0;">Add New Team</h3>
+            <input type="text" id="new-team-name" placeholder="Enter Player Name" style="width:65%; padding:8px;">
+            <button onclick="addTeam()" style="padding:8px; width:30%;">Add</button>
+            <p style="font-size:0.7rem; color:#aaa;">*Tip: Always keep an even number of teams. Use 'BYE' if needed.</p>
+        </div>
+        <div id="manage-team-list"></div>
+        <button class="btn-gold" style="background:red; color:white; margin-top:30px;" onclick="resetSeason()">WIPE ALL DATA (NEW SEASON)</button>
     </div>
 </div>
 
 <script>
-    const teamList = ["BOSCO", "KIBET ARON", "ARLUSH", "LINOO", "MANU KHEED", "IAN TOO", "BRALYN KIPKIRUI", "KHOLS JUDE", "HOLY PLUG", "IANOHM", "MANU JOSH", "ZADDOCK", "FELLO MARK", "ANDERSCO KEVELYSON"];
-    
-    let db = JSON.parse(localStorage.getItem('efl_final_v3')) || {};
+    // INITIAL LOAD FROM STORAGE
+    let teamList = JSON.parse(localStorage.getItem('efl_teams')) || ["TEAM A", "TEAM B", "TEAM C", "TEAM D"];
+    let db = JSON.parse(localStorage.getItem('efl_scores')) || {};
     let isAdmin = false;
 
-    // Populate Selector
-    const sel = document.getElementById('round-select');
-    for(let i=1; i<=13; i++){
-        let o = document.createElement('option'); o.value = i; o.text = "Match Day " + i;
-        sel.appendChild(o);
+    function saveToStorage() {
+        localStorage.setItem('efl_teams', JSON.stringify(teamList));
+        localStorage.setItem('efl_scores', JSON.stringify(db));
     }
 
-    // Round Robin Scheduler
+    function switchTab(tab) {
+        ['fixtures', 'table', 'stats', 'manage'].forEach(t => {
+            document.getElementById('tab-' + t).classList.toggle('hidden', t !== tab);
+            if(document.getElementById('btn-' + t)) 
+                document.getElementById('btn-' + t).classList.toggle('active', t === tab);
+        });
+        if(tab === 'table' || tab === 'stats') calculateAll();
+        if(tab === 'manage') renderManageList();
+        if(tab === 'fixtures') { updateRoundSelector(); loadFixtures(); }
+    }
+
+    function login() {
+        if(document.getElementById('pin').value === "1234") {
+            isAdmin = true;
+            document.getElementById('admin-auth').classList.add('hidden');
+            document.getElementById('btn-manage').classList.remove('hidden');
+            document.getElementById('save-btn').classList.remove('hidden');
+            switchTab('manage');
+        }
+    }
+
+    // --- TEAM MANAGEMENT ---
+    function renderManageList() {
+        const container = document.getElementById('manage-team-list');
+        container.innerHTML = teamList.map((t, i) => `
+            <div class="team-manage-item">
+                <span>${i+1}. <b>${t}</b></span>
+                <button onclick="removeTeam(${i})" style="background:none; border:1px solid red; color:red; cursor:pointer;">Remove</button>
+            </div>
+        `).join('');
+    }
+
+    function addTeam() {
+        const name = document.getElementById('new-team-name').value.trim();
+        if(name) {
+            teamList.push(name.toUpperCase());
+            document.getElementById('new-team-name').value = "";
+            saveToStorage();
+            renderManageList();
+        }
+    }
+
+    function removeTeam(index) {
+        if(confirm("Remove this team? This may affect existing scores.")) {
+            teamList.splice(index, 1);
+            saveToStorage();
+            renderManageList();
+        }
+    }
+
+    function resetSeason() {
+        if(confirm("DANGER: This wipes all scores and starts a fresh season. Continue?")) {
+            db = {};
+            saveToStorage();
+            alert("Season Reset!");
+            location.reload();
+        }
+    }
+
+    // --- FIXTURES LOGIC ---
+    function updateRoundSelector() {
+        const sel = document.getElementById('round-select');
+        const rounds = teamList.length % 2 === 0 ? teamList.length - 1 : teamList.length;
+        sel.innerHTML = "";
+        for(let i=1; i<=rounds; i++){
+            let o = document.createElement('option'); o.value = i; o.text = "Match Day " + i;
+            sel.appendChild(o);
+        }
+    }
+
     function getRoundRobinMatches(roundNum) {
         let schedule = [];
         let temp = [...teamList];
+        if (temp.length % 2 !== 0) temp.push("BYE");
         let n = temp.length;
         for (let r = 1; r < roundNum; r++) {
             let last = temp.pop();
@@ -189,39 +231,13 @@
         return schedule;
     }
 
-    // Tab Navigation
-    function switchTab(tab) {
-        document.getElementById('tab-fixtures').classList.toggle('hidden', tab !== 'fixtures');
-        document.getElementById('tab-table').classList.toggle('hidden', tab !== 'table');
-        document.getElementById('tab-stats').classList.toggle('hidden', tab !== 'stats');
-        
-        document.getElementById('btn-fix').classList.toggle('active', tab === 'fixtures');
-        document.getElementById('btn-tab').classList.toggle('active', tab === 'table');
-        document.getElementById('btn-stat').classList.toggle('active', tab === 'stats');
-        
-        if(tab === 'table') calculateAllData();
-        if(tab === 'stats') calculateAllData();
-    }
-
-    // Admin Login
-    function login() {
-        if(document.getElementById('pin').value === "1234") {
-            isAdmin = true;
-            document.getElementById('admin-auth').innerHTML = "<p style='color:#c5a059; text-align:center; margin:0;'>Admin Unlocked 🔓</p>";
-            document.getElementById('save-btn').classList.remove('hidden');
-            loadFixtures();
-        }
-    }
-
-    // Load Matches for Selected Round
     function loadFixtures() {
-        const r = parseInt(sel.value);
+        const r = parseInt(document.getElementById('round-select').value) || 1;
         document.getElementById('current-round-label').innerText = "MATCH DAY " + r;
         const list = document.getElementById('fixture-list');
         const matches = getRoundRobinMatches(r);
         const saved = db[r] || {};
         list.innerHTML = "";
-        
         matches.forEach((match, i) => {
             const key = match.sort().join("_vs_");
             const s1 = saved[key] ? saved[key][match[0]] : "";
@@ -229,95 +245,65 @@
             list.innerHTML += `
                 <div class="fixture-card">
                     <span style="text-align:right">${match[0]}</span>
-                    ${isAdmin ? `<input type="number" id="in1-${i}" value="${s1}">` : `<b style="margin:0 5px; font-size:1.1rem">${s1 !== "" ? s1 : '-'}</b>`}
+                    ${isAdmin ? `<input type="number" id="in1-${i}" value="${s1}">` : `<b>${s1 !== "" ? s1 : '-'}</b>`}
                     <div class="vs-box">VS</div>
-                    ${isAdmin ? `<input type="number" id="in2-${i}" value="${s2}">` : `<b style="margin:0 5px; font-size:1.1rem">${s2 !== "" ? s2 : '-'}</b>`}
+                    ${isAdmin ? `<input type="number" id="in2-${i}" value="${s2}">` : `<b>${s2 !== "" ? s2 : '-'}</b>`}
                     <span style="text-align:left">${match[1]}</span>
                 </div>
             `;
         });
     }
 
-    // Save Data
     function saveScores() {
-        const r = sel.value;
+        const r = document.getElementById('round-select').value;
         const matches = getRoundRobinMatches(parseInt(r));
         db[r] = {};
         matches.forEach((match, i) => {
             const key = match.sort().join("_vs_");
             const v1 = document.getElementById(`in1-${i}`).value;
             const v2 = document.getElementById(`in2-${i}`).value;
-            if(v1 !== "" && v2 !== "") {
-                db[r][key] = { [match[0]]: parseInt(v1), [match[1]]: parseInt(v2) };
-            }
+            if(v1 !== "" && v2 !== "") db[r][key] = { [match[0]]: parseInt(v1), [match[1]]: parseInt(v2) };
         });
-        localStorage.setItem('efl_final_v3', JSON.stringify(db));
-        alert("Match Day " + r + " Saved!");
+        saveToStorage();
+        alert("Scores Saved!");
     }
 
-    // Core Calculation for Table and Stats
-    function calculateAllData() {
+    // --- CALCULATION ---
+    function calculateAll() {
         let stats = {};
         teamList.forEach(t => stats[t] = { name:t, p:0, w:0, d:0, l:0, gf:0, ga:0, pts:0 });
-        
         Object.values(db).forEach(round => {
             Object.keys(round).forEach(key => {
                 const teams = key.split("_vs_");
-                const s1 = round[key][teams[0]];
-                const s2 = round[key][teams[1]];
+                if(!stats[teams[0]] || !stats[teams[1]]) return;
+                const s1 = round[key][teams[0]], s2 = round[key][teams[1]];
                 let t1 = stats[teams[0]], t2 = stats[teams[1]];
-                
                 t1.p++; t2.p++; t1.gf += s1; t1.ga += s2; t2.gf += s2; t2.ga += s1;
-                
                 if(s1 > s2) { t1.w++; t1.pts += 3; t2.l++; }
                 else if(s2 > s1) { t2.w++; t2.pts += 3; t1.l++; }
                 else { t1.d++; t1.pts += 1; t2.d++; t2.pts += 1; }
             });
         });
-
-        // 1. Populate Main Table
-        let tableData = Object.values(stats).sort((a,b) => b.pts - a.pts || (b.gf-b.ga) - (a.gf-a.ga) || b.gf - a.gf);
-        document.getElementById('table-body').innerHTML = tableData.map((s, i) => `
-            <tr class="${i === 0 ? 'pos-1' : ''}">
-                <td>${i+1}</td>
-                <td class="team-name">${s.name}</td>
-                <td>${s.p}</td><td>${s.w}</td><td>${s.d}</td><td>${s.l}</td>
-                <td>${s.gf - s.ga}</td><td><b>${s.pts}</b></td>
-            </tr>
+        let sorted = Object.values(stats).sort((a,b) => b.pts - a.pts || (b.gf-b.ga) - (a.gf-a.ga) || b.gf - a.gf);
+        document.getElementById('table-body').innerHTML = sorted.map((s, i) => `
+            <tr class="${i === 0 ? 'pos-1' : ''}"><td>${i+1}</td><td class="team-name">${s.name}</td><td>${s.p}</td><td>${s.w}</td><td>${s.d}</td><td>${s.l}</td><td>${s.gf - s.ga}</td><td><b>${s.pts}</b></td></tr>
         `).join('');
 
-        // 2. Populate Attack Stats (Most GF)
-        let attackData = [...Object.values(stats)].sort((a,b) => b.gf - a.gf);
-        document.getElementById('attack-body').innerHTML = attackData.slice(0, 5).map((s, i) => `
-            <tr><td>${i+1}</td><td class="team-name">${s.name}</td><td style="color:var(--gold-text); font-weight:bold">${s.gf}</td></tr>
-        `).join('');
-
-        // 3. Populate Defence Stats (Least GA - only for teams that have played)
-        let defenceData = [...Object.values(stats)].filter(s => s.p > 0).sort((a,b) => a.ga - b.ga);
-        document.getElementById('defence-body').innerHTML = defenceData.slice(0, 5).map((s, i) => `
-            <tr><td>${i+1}</td><td class="team-name">${s.name}</td><td style="color:#4ade80; font-weight:bold">${s.ga}</td></tr>
-        `).join('');
+        document.getElementById('attack-body').innerHTML = [...Object.values(stats)].sort((a,b) => b.gf - a.gf).slice(0,5).map((s, i) => `<tr><td>${i+1}</td><td class="team-name">${s.name}</td><td><b>${s.gf}</b></td></tr>`).join('');
+        document.getElementById('defence-body').innerHTML = [...Object.values(stats)].filter(s=>s.p>0).sort((a,b) => a.ga - b.ga).slice(0,5).map((s, i) => `<tr><td>${i+1}</td><td class="team-name">${s.name}</td><td><b>${s.ga}</b></td></tr>`).join('');
     }
 
-    // Multi-purpose Image Downloader
     function downloadImage(areaId, filename) {
         const area = document.getElementById(areaId);
-        
-        // Add a class temporarily to show the hidden headers for a clean export
         area.classList.add('downloading');
-        
         html2canvas(area, { backgroundColor: "#020617", scale: 2 }).then(canvas => {
             const link = document.createElement('a');
-            link.download = filename;
-            link.href = canvas.toDataURL();
-            link.click();
-            
-            // Remove the temporary class so the app goes back to normal
+            link.download = filename; link.href = canvas.toDataURL(); link.click();
             area.classList.remove('downloading');
         });
     }
 
-    // Initialize
+    updateRoundSelector();
     loadFixtures();
 </script>
 </body>
