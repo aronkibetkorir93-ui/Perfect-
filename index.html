@@ -4,45 +4,231 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Elite Football League</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        /* CSS STYLES */
+        :root {
+            --bg-dark: #050a18;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --gold: #d4af37;
+            --gold-bright: #f9e29c;
+            --text-white: #e0e0e0;
+        }
+
+        body {
+            background: radial-gradient(circle at top, #101e3d 0%, var(--bg-dark) 100%);
+            background-attachment: fixed;
+            color: var(--text-white);
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 10px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-top: 20px;
+        }
+
+        h1 {
+            letter-spacing: 3px;
+            color: var(--gold);
+            font-size: 1.5rem;
+            text-transform: uppercase;
+        }
+
+        #admin-auth, #admin-panel {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--gold);
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+            border-radius: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            font-size: 0.85rem;
+        }
+
+        th {
+            background: rgba(0, 0, 0, 0.6);
+            color: var(--gold);
+            padding: 10px 5px;
+            text-align: center;
+        }
+
+        td {
+            padding: 12px 5px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .team-col { text-align: left; padding-left: 10px; font-weight: bold; }
+
+        input[type="number"] {
+            width: 40px;
+            background: #000;
+            border: 1px solid var(--gold);
+            color: #fff;
+            text-align: center;
+        }
+
+        .btn {
+            background: var(--gold);
+            color: #000;
+            border: none;
+            padding: 8px 15px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .fixture-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 8px 0;
+            padding: 5px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <div class="logo">EFL</div>
-            <h1>LEAGUE TABLE</h1>
-        </header>
 
-        <div id="admin-auth">
-            <input type="password" id="admin-pass" placeholder="Enter Admin Password">
-            <button onclick="checkAuth()">Login to Update</button>
-        </div>
+<div class="container">
+    <header>
+        <h1>League Table</h1>
+    </header>
 
-        <div id="admin-panel" style="display: none;">
-            <h3>Update Round Scores</h3>
-            <div id="fixtures-input-list"></div>
-            <button class="save-btn" onclick="processScores()">Update Table</button>
-        </div>
-
-        <table id="league-table">
-            <thead>
-                <tr>
-                    <th>POS</th>
-                    <th class="team-col">TEAM</th>
-                    <th>P</th>
-                    <th>W</th>
-                    <th>D</th>
-                    <th>L</th>
-                    <th>GF</th>
-                    <th>GA</th>
-                    <th>GD</th>
-                    <th>Pts</th>
-                </tr>
-            </thead>
-            <tbody id="table-body">
-                </tbody>
-        </table>
+    <div id="admin-auth">
+        <input type="password" id="admin-pass" placeholder="Password" style="padding: 5px; width: 100px;">
+        <button class="btn" onclick="checkAuth()">Login to Update</button>
     </div>
-    <script src="script.js"></script>
+
+    <div id="admin-panel" style="display: none;">
+        <h3>Enter Match Scores</h3>
+        <div id="fixtures-input-list"></div>
+        <button class="btn" onclick="processScores()" style="margin-top:15px;">Update All Standings</button>
+        <button class="btn" onclick="resetData()" style="background: #a33; color: white; margin-left: 10px;">Reset Table</button>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>POS</th>
+                <th class="team-col">TEAM</th>
+                <th>P</th>
+                <th>W</th>
+                <th>D</th>
+                <th>L</th>
+                <th>GD</th>
+                <th>Pts</th>
+            </tr>
+        </thead>
+        <tbody id="table-body"></tbody>
+    </table>
+</div>
+
+<script>
+    const teamNames = [
+        "IAN TOO", "BLAMEK", "KHOLS JUDE", "BOSCO", "KIBET ARON", 
+        "BRALYN KIPKIRUI", "LINOO", "MANU KHEED", "HOLY PLUG", 
+        "IANOHM", "FELLO MARK", "ANDERSCO KEVELYSON", "MANU JOSH", "ARLUSH"
+    ];
+
+    let teams = JSON.parse(localStorage.getItem('efl_data')) || teamNames.map(name => ({
+        name, p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0
+    }));
+
+    function renderTable() {
+        // Sorting logic: Points -> Goal Difference -> Goals Scored
+        teams.sort((a, b) => b.pts - a.pts || b.gd - a.gd || b.gf - a.gf);
+        
+        const tbody = document.getElementById('table-body');
+        tbody.innerHTML = teams.map((t, i) => `
+            <tr>
+                <td>${i + 1}</td>
+                <td class="team-col">${t.name}</td>
+                <td>${t.p}</td>
+                <td>${t.w}</td>
+                <td>${t.d}</td>
+                <td>${t.l}</td>
+                <td>${t.gd}</td>
+                <td style="color:var(--gold-bright)"><strong>${t.pts}</strong></td>
+            </tr>
+        `).join('');
+    }
+
+    function checkAuth() {
+        if(document.getElementById('admin-pass').value === "1234") {
+            document.getElementById('admin-panel').style.display = "block";
+            document.getElementById('admin-auth').style.display = "none";
+            setupInputs();
+        } else {
+            alert("Wrong password!");
+        }
+    }
+
+    function setupInputs() {
+        const container = document.getElementById('fixtures-input-list');
+        container.innerHTML = "";
+        // Pairs teams for matches
+        for(let i=0; i < teams.length; i+=2) {
+            container.innerHTML += `
+                <div class="fixture-row">
+                    <span>${teams[i].name}</span>
+                    <div>
+                        <input type="number" id="s-${i}" placeholder="0"> : 
+                        <input type="number" id="s-${i+1}" placeholder="0">
+                    </div>
+                    <span>${teams[i+1].name}</span>
+                </div>
+            `;
+        }
+    }
+
+    function processScores() {
+        for(let i=0; i < teams.length; i+=2) {
+            const s1 = parseInt(document.getElementById(`s-${i}`).value);
+            const s2 = parseInt(document.getElementById(`s-${i+1}`).value);
+
+            if(!isNaN(s1) && !isNaN(s2)) {
+                updateStats(teams[i], s1, s2);
+                updateStats(teams[i+1], s2, s1);
+            }
+        }
+        localStorage.setItem('efl_data', JSON.stringify(teams));
+        renderTable();
+        alert("Standings Updated!");
+    }
+
+    function updateStats(team, gf, ga) {
+        team.p += 1;
+        team.gf += gf;
+        team.ga += ga;
+        team.gd = team.gf - team.ga;
+        if (gf > ga) { team.w += 1; team.pts += 3; }
+        else if (gf === ga) { team.d += 1; team.pts += 1; }
+        else { team.l += 1; }
+    }
+
+    function resetData() {
+        if(confirm("Are you sure? This wipes the table!")) {
+            localStorage.removeItem('efl_data');
+            location.reload();
+        }
+    }
+
+    renderTable();
+</script>
+
 </body>
 </html>
