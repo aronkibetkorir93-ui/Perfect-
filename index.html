@@ -5,230 +5,220 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Elite Football League</title>
     <style>
-        /* CSS STYLES */
         :root {
-            --bg-dark: #050a18;
-            --card-bg: rgba(255, 255, 255, 0.05);
-            --gold: #d4af37;
-            --gold-bright: #f9e29c;
-            --text-white: #e0e0e0;
+            --bg-dark: #020617;
+            --efl-blue: #0f172a;
+            --gold-gradient: linear-gradient(180deg, #f3e2b3 0%, #c5a059 50%, #8a6d3b 100%);
+            --gold-text: #e2c07d;
+            --row-bg: rgba(255, 255, 255, 0.03);
         }
 
         body {
-            background: radial-gradient(circle at top, #101e3d 0%, var(--bg-dark) 100%);
-            background-attachment: fixed;
-            color: var(--text-white);
-            font-family: 'Segoe UI', sans-serif;
+            background-color: var(--bg-dark);
+            background-image: radial-gradient(circle at top, #1e293b 0%, var(--bg-dark) 80%);
+            color: white;
+            font-family: 'Arial Narrow', sans-serif;
             margin: 0;
             padding: 10px;
+            min-height: 100vh;
         }
 
-        .container {
-            max-width: 800px;
-            margin: auto;
+        .container { max-width: 500px; margin: auto; }
+
+        /* Header & Logo */
+        header { text-align: center; padding: 20px 0; }
+        .logo-circle {
+            width: 80px; height: 80px; margin: 0 auto 10px;
+            border: 2px solid var(--gold-text); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: bold; color: var(--gold-text); font-size: 1.5rem;
+            background: rgba(0,0,0,0.5);
         }
 
-        header {
-            text-align: center;
-            margin-bottom: 20px;
-            padding-top: 20px;
+        h1 { 
+            font-size: 1.4rem; color: var(--gold-text); 
+            letter-spacing: 2px; text-transform: uppercase; margin: 0;
         }
 
-        h1 {
-            letter-spacing: 3px;
-            color: var(--gold);
-            font-size: 1.5rem;
-            text-transform: uppercase;
+        /* Navigation Tabs */
+        .tabs { display: flex; gap: 5px; margin-bottom: 15px; }
+        .tab-btn {
+            flex: 1; padding: 10px; border: 1px solid #c5a059;
+            background: transparent; color: white; cursor: pointer;
+            text-transform: uppercase; font-weight: bold;
+        }
+        .tab-btn.active { background: var(--gold-gradient); color: black; }
+
+        /* Fixture Styling (Matches Template 2) */
+        .round-banner {
+            background: var(--gold-gradient); color: black;
+            text-align: center; font-weight: 900; padding: 5px;
+            margin-bottom: 10px; border-radius: 2px;
         }
 
-        #admin-auth, #admin-panel {
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px solid var(--gold);
-            padding: 15px;
-            margin-bottom: 20px;
-            text-align: center;
-            border-radius: 8px;
+        .fixture-card {
+            background: var(--efl-blue);
+            border: 1px solid rgba(197, 160, 89, 0.3);
+            margin-bottom: 8px; display: flex; align-items: center;
+            justify-content: space-between; padding: 12px 15px;
+            position: relative; border-radius: 4px;
+        }
+        .fixture-card span { flex: 1; font-weight: bold; font-size: 0.9rem; }
+        .fixture-card .vs-box {
+            flex: 0; background: var(--gold-gradient); color: black;
+            padding: 2px 8px; font-size: 0.7rem; border-radius: 3px; margin: 0 10px;
+        }
+        .fixture-card input { width: 30px; text-align: center; border: none; border-radius: 2px; }
+
+        /* Table Styling (Matches Template 1) */
+        .league-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+        .league-table th { 
+            border-bottom: 1px solid var(--gold-text); color: var(--gold-text); 
+            padding: 10px 5px; text-align: center;
+        }
+        .league-table td { padding: 12px 5px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .team-name { text-align: left; padding-left: 10px; font-weight: bold; width: 40%; }
+        
+        .pos-1 { background: var(--gold-gradient); color: black !important; }
+
+        /* Admin UI */
+        .admin-login { text-align: center; margin-bottom: 20px; }
+        .btn-gold { 
+            background: var(--gold-gradient); border: none; padding: 10px 20px;
+            font-weight: bold; cursor: pointer; border-radius: 4px; margin-top: 10px; width: 100%;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: var(--card-bg);
-            backdrop-filter: blur(10px);
-            font-size: 0.85rem;
-        }
-
-        th {
-            background: rgba(0, 0, 0, 0.6);
-            color: var(--gold);
-            padding: 10px 5px;
-            text-align: center;
-        }
-
-        td {
-            padding: 12px 5px;
-            text-align: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .team-col { text-align: left; padding-left: 10px; font-weight: bold; }
-
-        input[type="number"] {
-            width: 40px;
-            background: #000;
-            border: 1px solid var(--gold);
-            color: #fff;
-            text-align: center;
-        }
-
-        .btn {
-            background: var(--gold);
-            color: #000;
-            border: none;
-            padding: 8px 15px;
-            font-weight: bold;
-            cursor: pointer;
-            border-radius: 4px;
-        }
-
-        .fixture-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 8px 0;
-            padding: 5px;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
-        }
+        .hidden { display: none; }
     </style>
 </head>
 <body>
 
 <div class="container">
     <header>
-        <h1>League Table</h1>
+        <div class="logo-circle">EFL</div>
+        <h1>Elite Football League</h1>
     </header>
 
-    <div id="admin-auth">
-        <input type="password" id="admin-pass" placeholder="Password" style="padding: 5px; width: 100px;">
-        <button class="btn" onclick="checkAuth()">Login to Update</button>
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('fixtures')">Fixtures</button>
+        <button class="tab-btn" onclick="switchTab('table')">Standings</button>
     </div>
 
-    <div id="admin-panel" style="display: none;">
-        <h3>Enter Match Scores</h3>
-        <div id="fixtures-input-list"></div>
-        <button class="btn" onclick="processScores()" style="margin-top:15px;">Update All Standings</button>
-        <button class="btn" onclick="resetData()" style="background: #a33; color: white; margin-left: 10px;">Reset Table</button>
+    <div id="admin-auth" class="admin-login">
+        <input type="password" id="pin" placeholder="Enter PIN" style="padding: 8px;">
+        <button onclick="login()" style="padding: 8px;">Login</button>
     </div>
 
-    <table>
-        <thead>
-            <tr>
-                <th>POS</th>
-                <th class="team-col">TEAM</th>
-                <th>P</th>
-                <th>W</th>
-                <th>D</th>
-                <th>L</th>
-                <th>GD</th>
-                <th>Pts</th>
-            </tr>
-        </thead>
-        <tbody id="table-body"></tbody>
-    </table>
+    <div id="tab-fixtures">
+        <select id="round-select" onchange="loadFixtures()" style="width:100%; padding:10px; margin-bottom:10px; background:#000; color:#fff; border:1px solid #c5a059;"></select>
+        <div class="round-banner" id="current-round-label">ROUND 1</div>
+        <div id="fixture-list"></div>
+        <button id="save-btn" class="btn-gold hidden" onclick="saveScores()">SAVE SCORES</button>
+    </div>
+
+    <div id="tab-table" class="hidden">
+        <table class="league-table">
+            <thead>
+                <tr>
+                    <th>POS</th>
+                    <th style="text-align:left; padding-left:10px;">PLAYER</th>
+                    <th>P</th><th>W</th><th>D</th><th>L</th><th>GD</th><th>PTS</th>
+                </tr>
+            </thead>
+            <tbody id="table-body"></tbody>
+        </table>
+    </div>
 </div>
 
 <script>
-    const teamNames = [
-        "IAN TOO", "BLAMEK", "KHOLS JUDE", "BOSCO", "KIBET ARON", 
-        "BRALYN KIPKIRUI", "LINOO", "MANU KHEED", "HOLY PLUG", 
-        "IANOHM", "FELLO MARK", "ANDERSCO KEVELYSON", "MANU JOSH", "ARLUSH"
-    ];
+    const teams = ["BOSCO", "KIBET ARON", "ARLUSH", "LINOO", "MANU KHEED", "IAN TOO", "BRALYN KIPKIRUI", "KHOLS JUDE", "HOLY PLUG", "IANOHM", "MANU JOSH", "ZADDOCK", "FELLO MARK", "ANDERSCO KEVELYSON"];
+    let db = JSON.parse(localStorage.getItem('efl_storage')) || {};
+    let isAdmin = false;
 
-    let teams = JSON.parse(localStorage.getItem('efl_data')) || teamNames.map(name => ({
-        name, p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0
-    }));
-
-    function renderTable() {
-        // Sorting logic: Points -> Goal Difference -> Goals Scored
-        teams.sort((a, b) => b.pts - a.pts || b.gd - a.gd || b.gf - a.gf);
-        
-        const tbody = document.getElementById('table-body');
-        tbody.innerHTML = teams.map((t, i) => `
-            <tr>
-                <td>${i + 1}</td>
-                <td class="team-col">${t.name}</td>
-                <td>${t.p}</td>
-                <td>${t.w}</td>
-                <td>${t.d}</td>
-                <td>${t.l}</td>
-                <td>${t.gd}</td>
-                <td style="color:var(--gold-bright)"><strong>${t.pts}</strong></td>
-            </tr>
-        `).join('');
+    // Build Round Selector
+    const sel = document.getElementById('round-select');
+    for(let i=1; i<=13; i++){
+        let o = document.createElement('option'); o.value = i; o.text = "Round " + i;
+        sel.appendChild(o);
     }
 
-    function checkAuth() {
-        if(document.getElementById('admin-pass').value === "1234") {
-            document.getElementById('admin-panel').style.display = "block";
-            document.getElementById('admin-auth').style.display = "none";
-            setupInputs();
-        } else {
-            alert("Wrong password!");
+    function switchTab(tab) {
+        document.getElementById('tab-fixtures').classList.toggle('hidden', tab !== 'fixtures');
+        document.getElementById('tab-table').classList.toggle('hidden', tab !== 'table');
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.innerText.toLowerCase().includes(tab)));
+        if(tab === 'table') calculateStandings();
+    }
+
+    function login() {
+        if(document.getElementById('pin').value === "1234") {
+            isAdmin = true;
+            document.getElementById('admin-auth').classList.add('hidden');
+            document.getElementById('save-btn').classList.remove('hidden');
+            loadFixtures();
         }
     }
 
-    function setupInputs() {
-        const container = document.getElementById('fixtures-input-list');
-        container.innerHTML = "";
-        // Pairs teams for matches
+    function loadFixtures() {
+        const r = sel.value;
+        document.getElementById('current-round-label').innerText = "ROUND " + r;
+        const list = document.getElementById('fixture-list');
+        const scores = db[r] || {};
+        list.innerHTML = "";
+
         for(let i=0; i < teams.length; i+=2) {
-            container.innerHTML += `
-                <div class="fixture-row">
-                    <span>${teams[i].name}</span>
-                    <div>
-                        <input type="number" id="s-${i}" placeholder="0"> : 
-                        <input type="number" id="s-${i+1}" placeholder="0">
-                    </div>
-                    <span>${teams[i+1].name}</span>
+            const s1 = scores[i] ?? "";
+            const s2 = scores[i+1] ?? "";
+            list.innerHTML += `
+                <div class="fixture-card">
+                    <span style="text-align:right">${teams[i]}</span>
+                    ${isAdmin ? `<input type="number" id="sc-${i}" value="${s1}">` : `<b style="margin:0 5px">${s1}</b>`}
+                    <div class="vs-box">VS</div>
+                    ${isAdmin ? `<input type="number" id="sc-${i+1}" value="${s2}">` : `<b style="margin:0 5px">${s2}</b>`}
+                    <span style="text-align:left">${teams[i+1]}</span>
                 </div>
             `;
         }
     }
 
-    function processScores() {
-        for(let i=0; i < teams.length; i+=2) {
-            const s1 = parseInt(document.getElementById(`s-${i}`).value);
-            const s2 = parseInt(document.getElementById(`s-${i+1}`).value);
+    function saveScores() {
+        const r = sel.value;
+        db[r] = db[r] || {};
+        for(let i=0; i < teams.length; i++) {
+            const val = document.getElementById(`sc-${i}`).value;
+            db[r][i] = val === "" ? null : parseInt(val);
+        }
+        localStorage.setItem('efl_storage', JSON.stringify(db));
+        alert("Scores Saved for Round " + r);
+    }
 
-            if(!isNaN(s1) && !isNaN(s2)) {
-                updateStats(teams[i], s1, s2);
-                updateStats(teams[i+1], s2, s1);
+    function calculateStandings() {
+        let stats = teams.map(name => ({ name, p:0, w:0, d:0, l:0, gf:0, ga:0, pts:0 }));
+        Object.values(db).forEach(round => {
+            for(let i=0; i<teams.length; i+=2) {
+                const s1 = round[i], s2 = round[i+1];
+                if(s1 !== null && s2 !== null && s1 !== undefined) {
+                    let t1 = stats[i], t2 = stats[i+1];
+                    t1.p++; t2.p++; t1.gf += s1; t1.ga += s2; t2.gf += s2; t2.ga += s1;
+                    if(s1 > s2) { t1.w++; t1.pts += 3; t2.l++; }
+                    else if(s1 < s2) { t2.w++; t2.pts += 3; t1.l++; }
+                    else { t1.d++; t1.pts += 1; t2.d++; t2.pts += 1; }
+                }
             }
-        }
-        localStorage.setItem('efl_data', JSON.stringify(teams));
-        renderTable();
-        alert("Standings Updated!");
+        });
+        stats.sort((a,b) => b.pts - a.pts || (b.gf - b.ga) - (a.gf - a.ga));
+        
+        const body = document.getElementById('table-body');
+        body.innerHTML = stats.map((s, i) => `
+            <tr class="${i === 0 ? 'pos-1' : ''}">
+                <td>${i+1}</td>
+                <td class="team-name">${s.name}</td>
+                <td>${s.p}</td><td>${s.w}</td><td>${s.d}</td><td>${s.l}</td>
+                <td>${s.gf - s.ga}</td><td><b>${s.pts}</b></td>
+            </tr>
+        `).join('');
     }
 
-    function updateStats(team, gf, ga) {
-        team.p += 1;
-        team.gf += gf;
-        team.ga += ga;
-        team.gd = team.gf - team.ga;
-        if (gf > ga) { team.w += 1; team.pts += 3; }
-        else if (gf === ga) { team.d += 1; team.pts += 1; }
-        else { team.l += 1; }
-    }
-
-    function resetData() {
-        if(confirm("Are you sure? This wipes the table!")) {
-            localStorage.removeItem('efl_data');
-            location.reload();
-        }
-    }
-
-    renderTable();
+    loadFixtures();
 </script>
-
 </body>
 </html>
