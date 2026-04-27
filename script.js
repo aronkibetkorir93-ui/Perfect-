@@ -1,260 +1,82 @@
-let teams = [];
-let fixtures = [];
-let currentMatchday = 0;
-
 const teamNames = [
-  "Arsenal", "Chelsea", "Liverpool", "Man City", "Man United",
-  "Tottenham", "Newcastle", "Aston Villa", "Brighton", "West Ham",
-  "Everton", "Leicester", "Leeds", "Wolves", "Fulham",
-  "Brentford", "Crystal Palace", "Bournemouth", "Burnley", "Forest"
+    "IAN TOO", "BLAMEK", "KHOLS JUDE", "BOSCO", "KIBET ARON", 
+    "BRALYN KIPKIRUI", "LINOO", "MANU KHEED", "HOLY PLUG", 
+    "IANOHM", "FELLO MARK", "ANDERSCO KEVELYSON", "MANU JOSH", "ARLUSH"
 ];
 
-/* ---------------- SAVE SYSTEM ---------------- */
-function saveData() {
-  localStorage.setItem("teams", JSON.stringify(teams));
-  localStorage.setItem("fixtures", JSON.stringify(fixtures));
-  localStorage.setItem("currentMatchday", currentMatchday);
-}
+// Initialize data structure
+let teams = JSON.parse(localStorage.getItem('efl_teams')) || teamNames.map(name => ({
+    name, p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0
+}));
 
-function loadData() {
-  let t = localStorage.getItem("teams");
-  let f = localStorage.getItem("fixtures");
-  let c = localStorage.getItem("currentMatchday");
-
-  if (t) teams = JSON.parse(t);
-  if (f) fixtures = JSON.parse(f);
-  if (c) currentMatchday = Number(c);
-}
-
-/* ---------------- TEAMS ---------------- */
-function generateTeams() {
-
-  teams = [];
-
-  let i = 0;
-  while (i < 20) {
-
-    teams.push({
-      name: teamNames[i],
-      played: 0,
-      wins: 0,
-      draws: 0,
-      losses: 0,
-      goalsFor: 0,
-      goalsAgainst: 0,
-      points: 0
-    });
-
-    i++;
-  }
-
-  saveData();
-  renderTable();
-}
-
-/* ---------------- FIXTURES ---------------- */
-function generateFixtures() {
-
-  fixtures = [];
-
-  let temp = teams.slice();
-
-  let round = 0;
-
-  while (round < 19) {
-
-    let matchday = [];
-    let i = 0;
-
-    while (i < 10) {
-
-      matchday.push({
-        home: temp[i],
-        away: temp[19 - i],
-        homeScore: "",
-        awayScore: "",
-        played: false
-      });
-
-      i++;
-    }
-
-    fixtures.push(matchday);
-
-    let last = temp.pop();
-    temp.splice(1, 0, last);
-
-    round++;
-  }
-
-  currentMatchday = 0;
-
-  saveData();
-}
-
-/* ---------------- MATCHDAY UI ---------------- */
-function renderMatchday() {
-
-  let matches = fixtures[currentMatchday];
-
-  let html = "";
-
-  let i = 0;
-  while (i < matches.length) {
-
-    let m = matches[i];
-
-    html += `
-      <div>
-        ${m.home.name}
-        <input id="h${i}" value="${m.homeScore}">
-        -
-        <input id="a${i}" value="${m.awayScore}">
-        ${m.away.name}
-      </div>
-    `;
-
-    i++;
-  }
-
-  document.getElementById("matches").innerHTML = html;
-}
-
-/* ---------------- REMOVE OLD STATS ---------------- */
-function removeStats(home, away, hg, ag) {
-
-  home.played--;
-  away.played--;
-
-  home.goalsFor -= hg;
-  home.goalsAgainst -= ag;
-
-  away.goalsFor -= ag;
-  away.goalsAgainst -= hg;
-
-  if (hg > ag) {
-    home.wins--;
-    home.points -= 3;
-    away.losses--;
-  }
-
-  else if (ag > hg) {
-    away.wins--;
-    away.points -= 3;
-    home.losses--;
-  }
-
-  else {
-    home.draws--;
-    away.draws--;
-    home.points--;
-    away.points--;
-  }
-}
-
-/* ---------------- SAVE ---------------- */
-function saveMatchday() {
-
-  let matches = fixtures[currentMatchday];
-
-  let i = 0;
-
-  while (i < matches.length) {
-
-    let m = matches[i];
-
-    let h = document.getElementById("h" + i).value;
-    let a = document.getElementById("a" + i).value;
-
-    if (m.played === true) {
-      removeStats(m.home, m.away, m.homeScore, m.awayScore);
-    }
-
-    if (h !== "" && a !== "") {
-
-      let homeGoals = Number(h);
-      let awayGoals = Number(a);
-
-      m.homeScore = homeGoals;
-      m.awayScore = awayGoals;
-      m.played = true;
-
-      m.home.played++;
-      m.away.played++;
-
-      m.home.goalsFor += homeGoals;
-      m.home.goalsAgainst += awayGoals;
-
-      m.away.goalsFor += awayGoals;
-      m.away.goalsAgainst += homeGoals;
-
-      if (homeGoals > awayGoals) {
-        m.home.wins++;
-        m.home.points += 3;
-        m.away.losses++;
-      }
-
-      else if (awayGoals > homeGoals) {
-        m.away.wins++;
-        m.away.points += 3;
-        m.home.losses++;
-      }
-
-      else {
-        m.home.draws++;
-        m.away.draws++;
-        m.home.points++;
-        m.away.points++;
-      }
-    }
-
-    i++;
-  }
-
-  saveData();
-  renderTable();
-}
-
-/* ---------------- NEXT ---------------- */
-function nextMatchday() {
-
-  if (currentMatchday < fixtures.length - 1) {
-    currentMatchday++;
-    saveData();
-    renderMatchday();
-  } else {
-    alert("Season Finished");
-  }
-}
-
-/* ---------------- TABLE ---------------- */
 function renderTable() {
-
-  teams.sort(function (a, b) {
-    return b.points - a.points;
-  });
-
-  let html = "";
-
-  let i = 0;
-  while (i < teams.length) {
-
-    let t = teams[i];
-
-    html += `
-      <tr>
-        <td>${t.name}</td>
-        <td>${t.played}</td>
-        <td>${t.points}</td>
-      </tr>
-    `;
-
-    i++;
-  }
-
-  document.getElementById("table").innerHTML = html;
+    // Sort by Pts, then GD, then GF
+    teams.sort((a, b) => b.pts - a.pts || b.gd - a.gd || b.gf - a.gf);
+    
+    const tbody = document.getElementById('table-body');
+    tbody.innerHTML = teams.map((t, i) => `
+        <tr>
+            <td>${i + 1}</td>
+            <td class="team-col">${t.name}</td>
+            <td>${t.p}</td>
+            <td>${t.w}</td>
+            <td>${t.d}</td>
+            <td>${t.l}</td>
+            <td>${t.gf}</td>
+            <td>${t.ga}</td>
+            <td>${t.gd}</td>
+            <td><strong>${t.pts}</strong></td>
+        </tr>
+    `).join('');
 }
 
-/* ---------------- INIT ---------------- */
-loadData();
+function checkAuth() {
+    if(document.getElementById('admin-pass').value === "1234") { // Set your password here
+        document.getElementById('admin-panel').style.display = "block";
+        document.getElementById('admin-auth').style.display = "none";
+        setupFixtureInputs();
+    }
+}
+
+function setupFixtureInputs() {
+    const container = document.getElementById('fixtures-input-list');
+    // Simplified: Just shows all teams in pairs for input
+    container.innerHTML = "";
+    for(let i=0; i < teams.length; i+=2) {
+        container.innerHTML += `
+            <div style="margin: 10px 0;">
+                <span>${teams[i].name}</span>
+                <input type="number" id="score-${i}"> vs 
+                <input type="number" id="score-${i+1}">
+                <span>${teams[i+1].name}</span>
+            </div>
+        `;
+    }
+}
+
+function processScores() {
+    for(let i=0; i < teams.length; i+=2) {
+        const s1 = parseInt(document.getElementById(`score-${i}`).value);
+        const s2 = parseInt(document.getElementById(`score-${i+1}`).value);
+
+        if(!isNaN(s1) && !isNaN(s2)) {
+            updateTeamStats(teams[i], s1, s2);
+            updateTeamStats(teams[i+1], s2, s1);
+        }
+    }
+    localStorage.setItem('efl_teams', JSON.stringify(teams));
+    renderTable();
+    alert("Scores Updated!");
+}
+
+function updateTeamStats(team, gf, ga) {
+    team.p += 1;
+    team.gf += gf;
+    team.ga += ga;
+    team.gd = team.gf - team.ga;
+    if (gf > ga) { team.w += 1; team.pts += 3; }
+    else if (gf === ga) { team.d += 1; team.pts += 1; }
+    else { team.l += 1; }
+}
+
 renderTable();
